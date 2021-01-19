@@ -32,12 +32,12 @@ int main(){
     }
     else if (jaki == 3) {
         range = 155;
-        M = 20;
+        M = 10;
         NG = 60000;
     }
     else if (jaki == 4) {
         range = 85;
-        M = 15;
+        M = 5;
         NG = 50000;
     }
     else if (jaki == 5) {
