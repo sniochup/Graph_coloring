@@ -45,13 +45,13 @@ int brute_coloring(int **matrix){
         colors[i] = color;
     }
 
-    //PRINT KOLORY
+    //PRINT COLORS
     for (int i = 0; i < vertices; i++){
-        cout << "Wierzcholek: " << i+1 << " - Kolor: " << colors[i] << endl;
+        cout << "Vertex: " << i+1 << " - Color: " << colors[i] << endl;
     }
     cout << endl;
     int max_c = max(colors, vertices);
-    cout << "Liczba uzytych kolorow (algorytm silowy): " << max_c << endl;
+    cout << "Number of used colors (brute force): " << max_c << endl;
 
     return max_c;
 }
@@ -112,14 +112,14 @@ int **extend_table_2d(int **tab, int rows, int cols, int plus){
 }
 
 int **generator() {
-    // GENEROWANIE GRAFU
+    // GRAPH GENERATOR
     cout << "Number of vertices: "; cin >> vertices;
     matrix = create_matrix(vertices);
-    cout << "vert: " << vertices << endl;
+    cout << "Vert: " << vertices << endl;
 
-    int density = 30; // % zageszczenia
-    int edges = vertices * (vertices - 1) * density / 200; // ilosc krawedzi
-    int counter = 0; // iterator krawedzi
+    int density = 30;                                       // density
+    int edges = vertices * (vertices - 1) * density / 200;  // number of edges
+    int counter = 0;                                        // edge iterator
 
     bool *visited = new bool[vertices];
     for (int i = 0; i < vertices; i++) visited[i] = false;
@@ -127,8 +127,7 @@ int **generator() {
     graph_generator(counter, edges);
     DFS(0, visited);
 
-    // USPOJNIANIE GRAFU
-
+    // GRAPH COHERENCE (uspójnianie grafu)
     for (int i = 0; i < vertices; i++){
         if (!visited[i]) {
             if (i > 0) {
@@ -146,7 +145,7 @@ int **generator() {
         DFS(i, visited);
     }
 
-    // ZAPIS DO PLIKU
+    // WRITE TO FILE
     fstream file;
     file.open("instances/file.txt", ios::out);
     file << vertices << endl;
@@ -227,13 +226,13 @@ void print_matrix_2d(int **tab, int rows, int cols){
 }
 
 int start(){
-    int wyb;
+    int source;
     cout << "Generate graph: 0" << endl;
     cout << "Read from file: 1" << endl;
-    cout << "Give chosen number: "; cin >> wyb;
+    cout << "Give chosen number: "; cin >> source;
     cout << endl;
 
-    switch (wyb) {
+    switch (source) {
         case 0:
             matrix = generator();
             break;
@@ -245,9 +244,9 @@ int start(){
             cout << "gc500.txt:          4" << endl;
             cout << "le450_5a.txt:       5" << endl;
             cout << "file.txt:           6" << endl;
-            cout << "Give chosen number: "; cin >> wyb;
+            cout << "Give chosen number: "; cin >> source;
             cout << endl;
-            switch (wyb){
+            switch (source){
                 case 1:
                     matrix = read_file("instances/queen6.txt");
                     break;
@@ -264,10 +263,10 @@ int start(){
                     matrix = read_file("instances/le450_5a.txt");
                     break;
                 case 6:
-                    matrix = read_file("instance/file.txt");
+                    matrix = read_file("instances/file.txt");
                     break;                
             }            
             break;
     }
-    return wyb;
+    return source;
 }

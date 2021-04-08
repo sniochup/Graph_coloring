@@ -24,10 +24,10 @@ int *crossover(int *parent1, int *parent2) {
     return child;
 }
 
-// mutacje
-int **mutation(int **tab, int pop_size, int mut, int range){
+// mutations
+int **mutation(int **tab, int pop_size, int mut, int range) {
     int it1 = 10;
-    bool zmiana = true;
+    bool shift = true;
     for (int i = 0; i < pop_size; i++) {
         if (rand() % 100 < mut) {
             int temp = evaluate(tab[i]);
@@ -35,14 +35,14 @@ int **mutation(int **tab, int pop_size, int mut, int range){
                 tab[i] = mutation4(tab[i], range);
                 it1 = 0;
             }
-            else if (temp > 50 || zmiana){
+            else if (temp > 50 || shift){
                 tab[i] = mutation1(tab[i], range);
-                zmiana = false;
+                shift = false;
                 it1++;
             }
             else if (temp < 50 && temp > 0) {
                 tab[i] = mutation2(tab[i], range);
-                zmiana = true;
+                shift = true;
                 it1++;
             }
             else
@@ -94,27 +94,27 @@ int *mutation4(int *tab, int range) {
 }
 
 
-// Zliczamy liczbę konfliktów w populacji
+// Counting the number of conflict in the population
 int evaluate(int *tab){
-    int konflikt = 0;
+    int conflict = 0;
     for(int i = 1; i < vertices; i++){
         for(int j = 0; j < i; j++) {
             if (matrix[i][j] && (tab[i] == tab[j])){
-                konflikt++;
+                conflict++;
             }
         }
     }
-    return konflikt;
+    return conflict;
 }
 
-int **keep_the_best(int **current_pop, int *fitness_tab, int M, int ilosc) {
+int **keep_the_best(int **current_pop, int *fitness_tab, int M, int quantity) {
     int counter = 0;
     // int max_ft = max(fitness_tab, M);
     int min_ft = min(fitness_tab, M);
-    int **tab = new int*[ilosc]; 
-    while(counter < ilosc) {
+    int **tab = new int*[quantity]; 
+    while(counter < quantity) {
         for(int i = 0; i < M; i++) {
-            if (fitness_tab[i] == min_ft && counter < ilosc) {
+            if (fitness_tab[i] == min_ft && counter < quantity) {
                 tab[counter] = current_pop[i];
                 counter++;
             }
@@ -124,21 +124,21 @@ int **keep_the_best(int **current_pop, int *fitness_tab, int M, int ilosc) {
     return tab;
 }
 
-int **keep_the_best_2tab(int **current_pop, int **offsprings, int *fitness_tab, int M, int ilosc) {
+int **keep_the_best_2tab(int **current_pop, int **offsprings, int *fitness_tab, int M, int quantity) {
     int counter = 0;
     //int max_ft = max(fitness_tab, M);
     int min_ft = min(fitness_tab, M);
 
-    int **tab = new int*[ilosc]; 
-    while(counter < ilosc) {
+    int **tab = new int*[quantity]; 
+    while(counter < quantity) {
         for(int i = M-1; i >= 0; i--) {
-            if (fitness_tab[i] == min_ft && counter < ilosc) {
-                if (i<ilosc){
+            if (fitness_tab[i] == min_ft && counter < quantity) {
+                if (i<quantity){
                     tab[counter] = current_pop[i];
                     counter++;
                 }
                 else {
-                    tab[counter] = offsprings[i-ilosc];
+                    tab[counter] = offsprings[i-quantity];
                     counter++;
                 }
             }
