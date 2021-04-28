@@ -1,2 +1,2 @@
 # OK_GC
-Implementation of genetic algorythm used to solve an NP-hard problem of graph coloring.
+Genetic algorithm implemented in C++ language used to solve an NP-hard problem of graph coloring.
